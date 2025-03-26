@@ -1,5 +1,5 @@
 [build]
-  command = "pip install -r requirements.txt && python run.py"
+  command = "pip install -r requirements.txt && python main.py"
   publish = "public"
 
 [functions]
