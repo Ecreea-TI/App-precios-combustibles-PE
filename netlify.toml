@@ -1,6 +1,6 @@
 [build]
   command = "pip install -r requirements.txt && python main.py"
-  publish = "public"
+  publish = "static"
 
 [functions]
 
