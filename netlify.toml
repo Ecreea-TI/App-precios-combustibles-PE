@@ -1,0 +1,6 @@
+[build]
+  command = "pip install -r requirements.txt && python run.py"
+  publish = "public"
+
+[functions]
+  include = "functions/**"
