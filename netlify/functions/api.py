@@ -24,9 +24,9 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["Content-Type", "Authorization", "Accept", "Origin", "X-Requested-With"],
-    expose_headers=["Content-Length"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+    expose_headers=["*"],
     max_age=3600
 )
 
@@ -62,11 +62,15 @@ def fetch_excel_data(max_retries: int = 3) -> List[Dict[Any, Any]]:
                 url,
                 headers={
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                    'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/json',
+                    'Accept': '*/*',
                     'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
-                    'Cache-Control': 'no-cache'
+                    'Cache-Control': 'no-cache',
+                    'Connection': 'keep-alive',
+                    'Pragma': 'no-cache',
+                    'Sec-Fetch-Mode': 'cors',
+                    'Sec-Fetch-Site': 'cross-site'
                 },
-                timeout=60,
+                timeout=120,
                 verify=True
             )
             response.raise_for_status()
