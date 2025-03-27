@@ -3,11 +3,13 @@
   "version": "1.0.0",
   "dependencies": {
     "@netlify/functions": "^2.0.0",
-    "@fastify/cors": "^8.0.0",
-    "mangum": "^0.17.0"
+    "@fastify/cors": "^8.0.0"
   },
   "scripts": {
-    "build": "pip install -r requirements.txt"
+    "build": "python -m pip install --upgrade pip && pip install -r requirements.txt",
+    "dev": "netlify dev"
   },
-  "externals": ["mangum"]
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
+  }
 }
