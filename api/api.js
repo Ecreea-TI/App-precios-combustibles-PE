@@ -1,11 +1,5 @@
-const { createRequestHandler } = require('@netlify/functions');
-const { app } = require('../main');
+const { handler } = require('../netlify/functions/api');
 
-module.exports.handler = createRequestHandler({
-  app,
-  callback: (req, res) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-  },
-});
+exports.handler = async (event, context) => {
+  return await handler(event, context);
+};
