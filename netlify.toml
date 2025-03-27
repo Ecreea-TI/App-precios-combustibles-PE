@@ -10,7 +10,9 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  external = ["mangum"]
+
+  [functions.external]
+  external_node_modules = ["mangum"]
 
 [dev]
   command = "uvicorn main:app --host 0.0.0.0 --port 8000"
