@@ -8,8 +8,9 @@
   status = 200
 
 [functions]
-  directory = "api"
+  directory = "netlify/functions"
   node_bundler = "esbuild"
+  external = ["mangum"]
 
 [dev]
   command = "uvicorn main:app --host 0.0.0.0 --port 8000"
