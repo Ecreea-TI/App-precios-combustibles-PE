@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "dependencies": {
     "@netlify/functions": "^2.0.0",
-    "@fastify/cors": "^8.0.0"
+    "@fastify/cors": "^8.0.0",
+    "mangum": "^0.10.0"
+  },
+  "scripts": {
+    "build": "pip install -r requirements.txt"
   }
 }
