@@ -1,11 +1,16 @@
 [build]
-  command = "pip install -r requirements.txt && python main.py"
+  command = "pip install -r requirements.txt"
   publish = "static"
 
-[functions]
+[[redirects]]
+  from = "/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
 
-    [functions.include]
-    external_node_modules = [
-      "module-one",
-      "module-two"
-    ]
+[functions]
+  directory = "api"
+  node_bundler = "esbuild"
+
+[dev]
+  command = "uvicorn main:app --host 0.0.0.0 --port 8000"
+  targetPort = 8000
