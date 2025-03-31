@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+pandas
+requests
+python-multipart
+python-dotenv
+mangum
