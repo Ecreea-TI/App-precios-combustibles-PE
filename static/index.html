@@ -471,6 +471,7 @@
                     extractFilterValues();
                     populateFilterSelects();
                     updateTable();
+                    toggleLoading(false);
                     return;
                     
                 } catch (error) {
@@ -483,6 +484,8 @@
                             : `Error al cargar los datos: ${error.message}`;
                             
                         alert(errorMessage);
+                        toggleLoading(false);
+                        return;
                     } else {
                         await new Promise(resolve => setTimeout(resolve, retryDelay * retryCount));
                     }
