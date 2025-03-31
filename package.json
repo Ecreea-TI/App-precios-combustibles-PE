@@ -4,5 +4,12 @@
   "dependencies": {
     "@netlify/functions": "^2.0.0",
     "@fastify/cors": "^8.0.0"
+  },
+  "scripts": {
+    "build": "python -m pip install --upgrade pip && pip install -r requirements.txt",
+    "dev": "netlify dev"
+  },
+  "devDependencies": {
+    "netlify-cli": "^17.0.0"
   }
 }

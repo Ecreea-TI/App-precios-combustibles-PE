@@ -27,3 +27,23 @@
 2025-03-26 17:28:32,722 - API-Precios - INFO - Starting API server...
 2025-03-26 17:29:28,387 - api-precios - INFO - Fetching data from https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx
 2025-03-26 17:29:32,194 - api-precios - INFO - Successfully fetched 17936 records
+2025-03-31 12:14:45,964 - API-Precios - INFO - Starting API server...
+2025-03-31 12:15:07,067 - api-precios - INFO - Intento 1 de 3 para obtener datos de https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx
+2025-03-31 12:15:08,945 - api-precios - INFO - Datos obtenidos exitosamente: 17934 registros
+2025-03-31 12:27:19,683 - API-Precios - INFO - Starting API server...
+2025-03-31 12:27:25,629 - api-precios - INFO - Intento 1 de 3 para obtener datos de https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx
+2025-03-31 12:27:27,539 - api-precios - INFO - Datos obtenidos exitosamente: 17934 registros
+2025-03-31 13:19:16,120 - API-Precios - INFO - Starting API server...
+2025-03-31 13:19:18,138 - api-precios - INFO - Intento 1 de 3 para obtener datos de https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx
+2025-03-31 13:19:19,982 - api-precios - INFO - Datos obtenidos exitosamente: 17940 registros
+2025-03-31 13:52:17,205 - api-precios - INFO - Intento 1 de 3 para obtener datos de https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx
+2025-03-31 13:52:19,561 - api-precios - INFO - Datos obtenidos exitosamente: 17940 registros
+2025-03-31 13:53:54,137 - API-Precios - INFO - Starting API server...
+2025-03-31 13:53:55,822 - api-precios - INFO - Intento 1 de 3 para obtener datos de https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx
+2025-03-31 13:53:57,511 - api-precios - INFO - Datos obtenidos exitosamente: 17940 registros
+2025-03-31 14:07:22,541 - API-Precios - INFO - Starting API server...
+2025-03-31 14:07:26,292 - api-precios - INFO - Intento 1 de 3 para obtener datos de https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx
+2025-03-31 14:07:28,167 - api-precios - INFO - Datos obtenidos exitosamente: 17946 registros
+2025-03-31 14:10:46,924 - API-Precios - INFO - Starting API server...
+2025-03-31 14:10:49,090 - api-precios - INFO - Intento 1 de 3 para obtener datos de https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx
+2025-03-31 14:10:51,600 - api-precios - INFO - Datos obtenidos exitosamente: 17946 registros
