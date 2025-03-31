@@ -46,28 +46,47 @@ def fetch_excel_data(max_retries: int = 3) -> List[Dict[Any, Any]]:
         last_fetch = get_cached_timestamp()
         if datetime.now() - last_fetch > timedelta(hours=1):
             clear_cache()
+            logger.info("Cache cleared due to expiration")
     
     retry_count = 0
     last_error = None
     
     while retry_count < max_retries:
         try:
-            # Verificar si hay una instancia en ejecución
+            # Verificar si hay una instancia en ejecución y aplicar backoff exponencial
             if hasattr(fetch_excel_data, '_lock'):
-                logger.info("Esperando a que se complete la solicitud anterior...")
-                time.sleep(1)
+                wait_time = 2 ** retry_count
+                logger.info(f"Request in progress, waiting {wait_time} seconds...")
+                time.sleep(wait_time)
                 continue
     
         try:
             url = "https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx"
             headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/json',
+                'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
+                'Cache-Control': 'no-cache',
+                'Connection': 'keep-alive',
+                'Pragma': 'no-cache'
             }
         
             logger.info(f"Fetching data from {url}")
             response = requests.get(
                 url,
-                headers={
+                headers=headers,
+                timeout=30,
+                verify=True
+            )
+            response.raise_for_status()
+            
+            logger.info(f"Successfully connected to {url}")
+            
+            try:
+                df = pd.read_excel(BytesIO(response.content))
+            except Exception as e:
+                logger.error(f"Error reading Excel content: {str(e)}")
+                raise pd.errors.ParserError(f"Failed to parse Excel content: {str(e)}")
                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
                     'Accept': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/json',
                     'Accept-Language': 'es-ES,es;q=0.9,en;q=0.8',
@@ -147,10 +166,15 @@ def fetch_excel_data(max_retries: int = 3) -> List[Dict[Any, Any]]:
                     status_code=status.HTTP_404_NOT_FOUND,
                     detail="El archivo Excel no se encuentra disponible en este momento."
                 )
+            elif e.response.status_code == 429:
+                raise HTTPException(
+                    status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                    detail="Demasiadas solicitudes. Por favor, espere un momento antes de intentar nuevamente."
+                )
             else:
                 raise HTTPException(
                     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                    detail=f"Error al acceder al archivo Excel: {e.response.status_code}"
+                    detail=f"Error al acceder al archivo Excel (código {e.response.status_code})"
                 )
             except requests.exceptions.HTTPError as e:
             logger.error(f"HTTP error while fetching Excel file: {str(e)}")
@@ -165,24 +189,31 @@ def fetch_excel_data(max_retries: int = 3) -> List[Dict[Any, Any]]:
                     status_code=status.HTTP_404_NOT_FOUND,
                     detail="El archivo Excel no se encuentra disponible en este momento."
                 )
+            elif e.response.status_code == 429:
+                raise HTTPException(
+                    status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+                    detail="Demasiadas solicitudes. Por favor, espere un momento antes de intentar nuevamente."
+                )
             else:
                 raise HTTPException(
                     status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                    detail=f"Error al acceder al archivo Excel: {e.response.status_code}"
+                    detail=f"Error al acceder al archivo Excel (código {e.response.status_code})"
                 )
     except pd.errors.ParserError as e:
         logger.error(f"Error parsing Excel file: {str(e)}")
         clear_cache()
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Error al procesar el archivo Excel. El formato del archivo puede haber cambiado."
+            detail=f"Error al procesar el archivo Excel: {str(e)}"
         )
     except Exception as e:
         logger.error(f"Unexpected error fetching Excel data: {str(e)}")
         clear_cache()
+        if isinstance(e, HTTPException):
+            raise e
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail="Error inesperado al obtener los datos. Por favor, inténtelo de nuevo más tarde."
+            detail=f"Error inesperado al procesar los datos: {str(e)}"
         )
 
 @app.get("/api/precios", response_model=List[Dict[Any, Any]], response_description="Lista de precios de combustibles")
