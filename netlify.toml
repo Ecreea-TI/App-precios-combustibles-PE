@@ -1,6 +1,7 @@
 [build]
   command = "pip install -r requirements.txt"
   publish = "static"
+  functions = "netlify/functions"
 
 [[redirects]]
   from = "/*"
@@ -17,11 +18,12 @@
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
-  included_files = ["**/*.xlsx"]
+  external_node_modules = ["pandas", "openpyxl"]
+  included_files = ["requirements.txt", "**/*.xlsx"]
 
-  [functions.external]
-  external_node_modules = ["mangum", "pandas", "openpyxl"]
+[build.environment]
+  PYTHON_VERSION = "3.12"
 
 [dev]
-  command = "uvicorn main:app --host 0.0.0.0 --port 8000"
+  command = "netlify dev"
   targetPort = 8000
