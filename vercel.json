@@ -13,6 +13,7 @@
     }
   ],
   "env": {
-    "PYTHONPATH": "."
+    "PYTHONPATH": ".",
+    "PORT": "8000"
   }
 }
