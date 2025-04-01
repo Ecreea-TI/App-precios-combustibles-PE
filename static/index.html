@@ -446,54 +446,29 @@
 
         // Función para cargar los datos iniciales
         async function loadData() {
-            let retryCount = 0;
-            const maxRetries = 3;
-            const retryDelay = 2000; // 2 segundos
-        
-            while (retryCount < maxRetries) {
-                try {
-                    toggleLoading(true);
-                    const response = await fetch('/precios');
-                    
-                    if (!response.ok) {
-                        const errorData = await response.json().catch(() => ({}));
-                        throw new Error(errorData.detail || 'Error en la respuesta del servidor');
-                    }
-                    
-                    const data = await response.json();
-                    if (!data.data || !Array.isArray(data.data)) {
-                        throw new Error('Formato de datos inválido');
-                    }
-                    
-                    allData = data.data;
-                    filteredData = [...allData];
-                    
-                    extractFilterValues();
-                    populateFilterSelects();
-                    updateTable();
-                    toggleLoading(false);
-                    return;
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    retryCount++;
-                    
-                    if (retryCount === maxRetries) {
-                        const errorMessage = error.message === 'Failed to fetch' 
-                            ? 'Error de conexión. Por favor, verifique su conexión a internet.'
-                            : `Error al cargar los datos: ${error.message}`;
-                            
-                        alert(errorMessage);
-                        toggleLoading(false);
-                        return;
-                    } else {
-                        await new Promise(resolve => setTimeout(resolve, retryDelay * retryCount));
-                    }
-                } finally {
-                    if (retryCount === maxRetries) {
-                        toggleLoading(false);
-                    }
+            try {
+                toggleLoading(true);
+                const response = await fetch('/precios');
+                if (!response.ok) {
+                    throw new Error('Error al cargar los datos');
                 }
+                const data = await response.json();
+                allData = data.data;
+                filteredData = [...allData];
+                
+                // Extraer valores únicos para los filtros
+                extractFilterValues();
+                
+                // Llenar los selectores de filtros
+                populateFilterSelects();
+                
+                // Mostrar los datos
+                updateTable();
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al cargar los datos. Por favor, intente nuevamente.');
+            } finally {
+                toggleLoading(false);
             }
         }
 

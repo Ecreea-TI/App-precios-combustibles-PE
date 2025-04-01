@@ -1,8 +1,0 @@
-{
-  "name": "api-precios",
-  "version": "1.0.0",
-  "dependencies": {
-    "@netlify/functions": "^2.0.0",
-    "@fastify/cors": "^8.0.0"
-  }
-}

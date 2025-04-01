@@ -14,6 +14,6 @@
   ],
   "env": {
     "PYTHONPATH": ".",
-    "PORT": "8000"
+    "EXCEL_URL": "https://www.osinergmin.gob.pe/seccion/centro_documental/hidrocarburos/SCOP/SCOP-DOCS/2025/Registro-precios/Ultimos-Precios-Registrados-EVPC.xlsx"
   }
 }
